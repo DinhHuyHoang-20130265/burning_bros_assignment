@@ -12,6 +12,7 @@ export const Assignment = () => {
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [showScrollTop, setShowScrollTop] = useState<boolean>(false);
 
+    const [error, setError] = useState<boolean>(false);
     const debouncedSearchQuery = useDebouncedValue(search, 500);
 
     // handle get next 20 products each time user scroll to the bottom
@@ -33,6 +34,7 @@ export const Assignment = () => {
             })
             .catch(err => {
                 console.error(err);
+                setError(true);
                 setHasMore(false);
             });
     };
@@ -106,6 +108,7 @@ export const Assignment = () => {
                     Scroll to Top
                 </button>
             )}
+            {error && <button onClick={() => fetchFunc()} className={"error"}>API called failed, try again</button>}
         </div>
     );
 }
